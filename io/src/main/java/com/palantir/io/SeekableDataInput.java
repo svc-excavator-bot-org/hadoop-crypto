@@ -23,8 +23,8 @@ public final class SeekableDataInput extends DataInputStream implements Seekable
 
     private final SeekableInput input;
 
-    public SeekableDataInput(SeekableInputStream in) {
-        super(in);
+    public SeekableDataInput(SeekableInput in) {
+        super(new SeekableInputStream(in));
         input = in;
     }
 
