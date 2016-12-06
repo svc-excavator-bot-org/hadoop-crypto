@@ -14,24 +14,31 @@
  * limitations under the License.
  */
 
-package com.palantir.hadoop.cipher;
+package com.palantir.io;
 
-import java.io.InputStream;
-import java.io.OutputStream;
-import javax.crypto.Cipher;
-import javax.crypto.CipherInputStream;
-import javax.crypto.CipherOutputStream;
+import java.io.Closeable;
+import java.io.IOException;
 
-public final class CipherStreamSupplierImpl implements CipherStreamSupplier {
+public interface SeekableInput extends Closeable {
 
-    @Override
-    public  CipherInputStream getInputStream(InputStream is, Cipher cipher) {
-        return new CipherInputStream(is, cipher);
-    }
+    /**
+     * Seeks to the given offset in the stream.
+     */
+    void seek(long offset) throws IOException;
 
-    @Override
-    public CipherOutputStream getOutputStream(OutputStream os, Cipher cipher) {
-        return new CipherOutputStream(os, cipher);
-    }
+    /**
+     * Gets the current byte offset in the stream.
+     */
+    long getPos() throws IOException;
+
+    /**
+     * @see java.io.InputStream#read(byte[], int, int)
+     */
+    int read(byte[] bytes, int offset, int length) throws IOException;
+
+    /**
+     * @see java.io.InputStream#read()
+     */
+    int read() throws IOException;
 
 }

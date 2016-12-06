@@ -41,7 +41,6 @@ public abstract class AbstractFsCipherInputStreamTest {
 
     private static final int NUM_BYTES = 1024 * 1024;
     private static final Random random = new Random(0);
-    private static final CipherStreamSupplier supplier = new CipherStreamSupplierImpl();
     private static final FileSystem fs = new RawLocalFileSystem();
     private static byte[] data;
 
@@ -77,7 +76,7 @@ public abstract class AbstractFsCipherInputStreamTest {
         }
 
         FSDataInputStream is = fs.open(path);
-        cis = new FsCipherInputStream(is, seekableCipher, supplier);
+        cis = new FsCipherInputStream(is, seekableCipher);
     }
 
     @Test
